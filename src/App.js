@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {getPokemon} from './API';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+const [name, setname]  = useState('');
+const  [pokemon, setPokemon] = useState(null);
+const [error, setError] = useState('')
+
+return(
+  <div className="App">
+    <header className="App-header">
+      <h2>Pokemon Finder</h2>
+      <input value={name} onChange={e=>setname(e.target.value.trim())} />
+      <button onClick={async()=>{
+        if(!name){
+          return setError("Please enter the name of a Pokemon !")
+        }
+        try{
+          const result  = await getPokemon(name);
+          setPokemon(result);
+          
+        }
+      }}
+    </header>
+  </div>
+)
