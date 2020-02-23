@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {getPokemon} from './API';
+import {getPokemon} from './Api';
 
 function App() {
 
@@ -20,9 +20,23 @@ return(
         try{
           const result  = await getPokemon(name);
           setPokemon(result);
-          
+          setname('');
+          setError('');
+        }catch (e){
+          setError('Something went wrong! Are you sure that\'s a Pokemon name ?')
         }
+
       }}
-    </header>
+      >
+        Search by Pokemon name !
+        </button>
+        {pokemon && pokemon.sprites && (
+          <img src={pokemon.sprites.front_default} alt={name} />
+        )}
+        {error && <div style={{color:'red'}} id="error">{error}</div>}
+        </header>
   </div>
-)
+);
+        }
+
+export default App;
